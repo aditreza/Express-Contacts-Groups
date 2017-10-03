@@ -31,10 +31,10 @@
         <table >
           <tr>
             <th>ID</th>
-            <th>STREET</th>
+            <th>NAME</th>
             <th>CITY</th>
             <th>ZIPCODE</th>
-            <th>NAME</th>
+            <th>STREET</th>
             <!-- <TH>COMPANY</TH>
             <TH>TELP NUMBER</TH>
             <TH>EMAIL</TH> -->
@@ -44,13 +44,10 @@
           <% for(let data=0; data<dataJsonAddresses.length; data++) {%>
             <tr>
               <td><%= dataJsonAddresses[data].id %></td>
+              <td><%= dataJsonAddresses[data].name %></td>
               <td><%= dataJsonAddresses[data].street %></td>
               <td><%= dataJsonAddresses[data].city %></td>
               <td><%= dataJsonAddresses[data].zipcode %></td>
-              <td><%= dataJsonAddresses[data].name %></td>
-              <!-- <td><%= dataJsonAddresses[data].company %></td>
-              <td><%= dataJsonAddresses[data].telp_number %></td>
-              <td><%= dataJsonAddresses[data].email %></td> -->
               <td><a style="text-decoration: none;" href='addresses/edit/<%= dataJsonAddresses[data].id %>'>Edit</a></td>
               <td><a style="text-decoration: none;" href='addresses/delete/<%= dataJsonAddresses[data].id %>'>Delete</a></td>
             </tr>
@@ -66,8 +63,8 @@
         <!-- <%= dataJsonContact.length%> -->
         <label for="#">Name:</label>
         <select name="name">
-          <% for(let i=0; i<dataJsonContact.length; i++) {%>
-          <option value="dataJsonAddresses[i].id"><%= dataJsonContact[i].name %></option>
+          <% for(let i=0; i< dataJsonContact.length; i++) {%>
+          <option value="<%= dataJsonContact[i].id %>"><%= dataJsonContact[i].name %></option>
           <%}%>
         </select>
 
