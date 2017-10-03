@@ -37,21 +37,25 @@ router.post('/',(req,res) =>{
 router.get('/edit/:id',(req,res) =>{
 
   Groups.updateGet(req.params, (err, result) => {
-    if(err){
-      console.log('error GET update from Groups')
-    }else{
-
-      res.render('groups-edit',{dataJsonGroups:result})
-    }
-  })
+      if(err){
+        console.log('error GET update from Groups')
+      }else{
+        res.render('groups-edit',{dataJsonGroups:result})
+      }
+    })
 	})
 
 // groups page // update => hasil edit
 router.post('/edit/:id',(req,res) => {
 	// update table-name SET column-name = '${value}', column-name = '${value}' where condition
 	db.all(`update Groups set name_of_group ='${req.body.nameOfGroups}' where id='${req.param('id')}'`, function(err,row){
-		res.redirect('../../groups')
-	})
+  // Groups.updatePost(req.body, req.param, (err,result)=>{
+  //   if(!err){
+      res.redirect('../../groups')
+    // }
+  })
+
+	// })
 })
 
 // groups page // delete

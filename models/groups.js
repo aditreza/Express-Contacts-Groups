@@ -27,8 +27,8 @@ class Groups{
   	})
   }
   //
-  // static updatePost(inputForm, upPost, cb){
-  //   db.all(`update Groups set name_of_group = ${inputForm.nameOfGroups} where id = ${upPost.id}`, function(err,row_Groups){
+  // static updatePost(reqbody, reqparam, cb){
+  //   db.all(`update Groups set name_of_group = ${reqbody.nameOfGroups} where id = ${reqparam.id}`, function(err,row_Groups){
   // 		cb(err, row_Groups)
   // 	})
   // }

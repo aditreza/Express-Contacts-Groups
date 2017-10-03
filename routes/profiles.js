@@ -28,6 +28,14 @@ router.get('/',(req,res) =>{
 			})
 		}
 	})
+
+	// Profiles.read((err, join_results)=>{
+	// 	if(err){
+	// 		console.log('Read load error from Profiles' )
+	// 	}else{
+	// 		res.render('profiles',{pesanError:'',dataJsonProfile:join_results,dataJsonContact:rows})
+	// 	}
+	// })
 })
 
 // profiles page // create
