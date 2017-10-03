@@ -23,7 +23,7 @@ router.post('/',(req,res) =>{
 
 	db.run(`insert into Contacts(name, company, telp_number, email) VALUES ('${req.body.nama}','${req.body.company}','${req.body.notlp}','${req.body.email}')`)
 	res.redirect('contacts')
-	console.log(req.body)
+	//console.log(req.body)
 })
 
 //contact page // update => ambil edit
@@ -49,8 +49,6 @@ router.get('/delete/:id',(req,res) => {
 		res.redirect('../../contacts')
 	})
 })
-
-
 
 
 module.exports = router

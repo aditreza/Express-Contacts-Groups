@@ -16,7 +16,7 @@ router.get('/',(req,res) =>{
       db.all('SELECT * from Contacts',(err, rowsContact)=>{
         // res.send(rows)
         res.render('addresses',{dataJsonAddresses:rows, dataJsonContact:rowsContact});
-        console.log(rows);
+        //console.log(rows);
 
       })
     }else {
@@ -67,11 +67,6 @@ router.get('/delete/:id',(req,res) => {
 		res.redirect('../../addresses')
 	})
 })
-
-
-
-
-
 
 
 module.exports = router

@@ -4,6 +4,10 @@ const router = express.Router()
 const sqlite3 = require('sqlite3').verbose()
 const db = new sqlite3.Database('data/data.db')
 
+// require models
+let Profiles = require('../models/profiles')
+let ProfilesNew = new Profiles()
+
 //*** profiles page // read
 router.get('/',(req,res) =>{
 	let queryContacts = 'select * from Contacts'
@@ -84,10 +88,15 @@ router.post('/edit/:id',(req,res) => {
 
 // profiles page // delete
 router.get('/delete/:id',(req,res) => {
-	db.all(`delete from Profile where id="${req.param('id')}"`,(err,row) =>{
-		console.log('deleted from Profile')
-		res.redirect('../../profiles')
-	})
+	Profiles.delete(req.params, (err, result) => {
+    if(err){
+      console.log('delete error from Profiles')
+    }else{
+      console.log('deleted from Profiles')
+      res.redirect('../../profiles')
+    }
+  })
+
 })
 
 

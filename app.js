@@ -15,7 +15,7 @@ app.use(bodyParser.json())
 // load css
 app.use(express.static(__dirname+'/views'))
 
-// routing = controller
+// routing 
 const index = require('./routes/index')
 const profiles = require('./routes/profiles')
 const groups = require('./routes/groups')
