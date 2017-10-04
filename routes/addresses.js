@@ -53,7 +53,7 @@ router.post('/',(req,res) => {
 // addresses page // update => ambil edit
 router.get('/edit/:id',(req,res)=>{
 
-	Addresses.updateGet(req.params).then(function(result){
+	Addresses.updateGet(req.params.id).then(function(result){
 		res.render('addresses-edit',{dataJsonAddresses:result.row_Addresses, dataJsonContact:result.row_Contacts})
 	}).catch(function(err){
 		console.log('error update GET from Addresses')
