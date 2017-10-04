@@ -10,38 +10,121 @@ class Profiles{
     this.name=name
   }
 
-  // static read(){
-  //
-  //   let queryContacts = 'select * from Contacts'
-  //   let joinQuery = 'select Profile.id, Profile.username, Profile.password, Contacts.name from Profile LEFT JOIN Contacts ON Profile.id_Contacts = Contacts.id'
-  //
-  //   db.all(joinQuery,(err,row_Join) => {
-  //     //console.log(row_Join)
-  //     let join_results = []
-  //     // // console.log(row_Groups[0].id)
-  //     for(let i=0; i<row_Join.length; i++){
-  //       let profile = new Profiles(row_Join[i].id, row_Join[i].username, row_Join[i].password, row_Join[i].id_Contacts)
-  //       join_results.push(profile)
-  //     }
-  //       db.all(queryContacts,(err, row_Contacts)=>{
-  //         let results_Contact = []
-  //         console.log(row_Contacts)
-  //         for (var j = 0; j < row_Contacts.length; j++) {
-  //           let profile = new Profiles(row_Contacts[j].name)
-  //           join_results.push(profile)
-  //         }
-  //         // console.log(results_Contact)
-  //       })
-  //     // console.log(join_results)
-  //     // cb(err, join_results)
-  //   })
-  // //
-  // }
+  static create(reqbody){
+    // db.run(`insert into Profile(username, password, id_Contacts) VALUES ('${reqbody.user_name}','${reqbody.pass_word}','${reqbody.name}')`,(err)=>{
+  	// 	if(err){
+  	// 		let queryContacts = 'select * from Contacts'
+  	// 		//	ALTER TABLE Profile ADD id_Contacts INTEGER REFERENCES Contacts('id')
+  	// 		let joinQuery = 'select Profile.id, Profile.username, Profile.password, Contacts.name from Profile LEFT JOIN Contacts ON Profile.id_Contacts = Contacts.id'
+    //
+  	// 		db.all(joinQuery,(err,row) => {
+  	// 			if(err){
+  	// 				console.log(`db join load err`)
+  	// 			}else{
+  	// 				db.all(queryContacts,(err,rows)=>{
+  	// 					if(err){
+  	// 						console.log(`db load err from Profile`)
+  	// 					}else{
+  	// 						// console.log('rows ===' + rows)
+  	// 						cb(err,row,rows)
+  	// 					}
+  	// 				})
+  	// 			}
+  	// 		})
+  	// 	}
+    // })
+
+    return new Promise((resolve,reject)=>{
+      db.run(`insert into Profile(username, password, id_Contacts) VALUES ('${reqbody.user_name}','${reqbody.pass_word}','${reqbody.name}')`,(err)=>{
+        if(err){
+          reject(err)
+        }else{
+          resolve(null)
+        }
+      })
+    })
+  }
+
+  static read(){
+    return new Promise((resolve,reject)=>{
+      let queryContacts = 'select * from Contacts'
+    	//	ALTER TABLE Profile ADD id_Contacts INTEGER REFERENCES Contacts('id')
+    	let joinQuery = 'select Profile.id, Profile.username, Profile.password, Contacts.name from Profile LEFT JOIN Contacts ON Profile.id_Contacts = Contacts.id'
+
+    	db.all(joinQuery,(err,row_Join) => {
+    		if(!err){
+          db.all(queryContacts,(err,row_Contacts)=>{
+    				let objProfiles = {
+              row_Join:row_Join,
+              row_Contacts:row_Contacts
+            }
+            resolve(objProfiles)
+    			})
+    		}else{
+          reject(err)
+        }
+      })
+    })
+
+    // let queryContacts = 'select * from Contacts'
+  	// //	ALTER TABLE Profile ADD id_Contacts INTEGER REFERENCES Contacts('id')
+  	// let joinQuery = 'select Profile.id, Profile.username, Profile.password, Contacts.name from Profile LEFT JOIN Contacts ON Profile.id_Contacts = Contacts.id'
+    //
+  	// db.all(joinQuery,(err,row_Join) => {
+  	// 	if(err){
+  	// 		console.log(`db join load err`)
+  	// 	}else{
+  	// 		db.all(queryContacts,(err,row_Contacts)=>{
+  	// 			if(err){
+  	// 				console.log(`db load err from Profile`)
+  	// 			}else{
+  	// 				// console.log('rows ===' + rows)
+  	// 				cb(row_Join,row_Contacts)
+  	// 			}
+  	// 		})
+  	// 	}
+    // })
+  }
+
+  static updateGet(reqparams,cb){
+    return new Promise((resolve,reject)=>{
+      let queryContacts = 'select * from Contacts'
+      db.all(`select * from Profile where id="${reqparams}"`, function(err, row_Profiles){
+    		if(!err){
+    			db.all('select * from Contacts',(err,row_Contacts)=>{
+    				if(err){
+    					console.log('error load Contact from Profile')
+    				}else{
+              // cb(row_Profiles, row_Contacts)
+              let objProfilesGet = {
+                row_Profiles:row_Profiles,
+                row_Contacts:row_Contacts
+              }
+              resolve(objProfilesGet)
+            }
+    			})
+    		}
+      })
+    })
+  }
+
+  static updatePost(reqbody,reqparam,cb){
+    return new Promise((resolve,reject)=>{
+      // console.log(reqbody, reqparam)
+      db.all(`update Profile set username = '${reqbody.username}',password = '${reqbody.password}' where id='${reqparam}'`, function(err,row_Profiles){
+    		// cb(err,row_Profiles)
+        resolve(row_Profiles)
+    	})
+    })
+  }
 
   static delete(delFrom, cb){
-    db.all(`delete from Profile where id = ${delFrom.id}`, function (err,row_Groups){
-  		cb(err, row_Groups)
-  	})
+    return new Promise((resolve,reject)=>{
+      db.all(`delete from Profile where id = ${delFrom.id}`, function (err,row_Profiles){
+    		// cb(err, row_Profiles)
+        resolve(row_Profiles)
+    	})
+    })
   }
 }
 
